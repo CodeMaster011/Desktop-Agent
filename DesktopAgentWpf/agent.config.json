@@ -1,0 +1,52 @@
+{
+	"Version": "1.0",
+	"ShowUi": false,
+	"Agents": [
+		{
+			"AgentId": "{7632E294-1AE8-4E51-9477-2F8071368EF3}",
+			"Name": "Run Material Notepad",
+			"Options": {
+				"AppName": "Material Notepad",
+				"Location": "C:\\Users\\xpd53\\Tools\\Material Notepad\\Material Notepad.exe",
+				"WorkingDir": "C:\\Users\\xpd53\\Tools\\Material Notepad",
+				"AutoStart": false,
+				"AutoExitAfterClose": false
+			}
+		},
+		{
+			"AgentId": "{7632E294-1AE8-4E51-9477-2F8071368EF3}",
+			"Name": "Run GstinValidationUx",
+			"Options": {
+				"AppName": "GstinValidationUx",
+				"Location": "F:\\Office\\GST\\Tools\\Gstin Validation\\GstinValidationUx.exe",
+				"WorkingDir": "F:\\Office\\GST\\Tools\\Gstin Validation",
+				"AutoStart": true,
+				"AutoExitAfterClose": true
+			}
+		},
+		{
+			"AgentId": "{5D9B2D87-958B-4564-9C13-ACF536CC2403}",
+			"Name": "Backup GstinValidationUx",
+			"Options": {
+				"AppName": "GstinValidationUx",
+				"Location": "F:\\Office\\GST\\Tools\\Gstin Validation",
+				"BackupLocation": "C:\\Users\\xpd53\\Documents\\temp",
+				"AutoBackupAfterExit": true,
+				"BackupFormat": "backup-[date]-[time]",
+				"Compression": false
+			}
+		},
+		{
+			"AgentId": "{5D9B2D87-958B-4564-9C13-ACF536CC2403}",
+			"Name": "Backup GstinValidationUx 2",
+			"Options": {
+				"AppName": "GstinValidationUx",
+				"Location": "F:\\Office\\GST\\Tools\\Gstin Validation",
+				"BackupLocation": "C:\\Users\\xpd53\\Documents\\temp2",
+				"AutoBackupAfterExit": true,
+				"BackupFormat": "backup-[date]-[time]",
+				"Compression": false
+			}
+		}
+	]
+}
