@@ -33,7 +33,8 @@
 				"BackupLocation": "C:\\Users\\xpd53\\Documents\\temp",
 				"AutoBackupAfterExit": true,
 				"BackupFormat": "backup-[date]-[time]",
-				"Compression": false
+				"Compression": false,
+				"ComparisonMode": true
 			}
 		},
 		{

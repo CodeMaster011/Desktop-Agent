@@ -28,6 +28,11 @@ namespace DesktopAgentWpf.Backups
             var backupText = GetBackupText(option.BackupFormat);
             var srcLocation = option.Location;
             var desLocation = Path.Combine(option.BackupLocation, backupText);
+
+            var state = LoadPersistantState();
+            if (option.ComparisonMode && !IsBackupNeeded(state, srcLocation))
+                return;
+
             if (!option.Compression)
             {
                 if (!Directory.Exists(desLocation))
@@ -46,11 +51,39 @@ namespace DesktopAgentWpf.Backups
                     var dirFilePath = srcFilePath.Replace(srcLocation, desLocation);
                     File.Copy(srcFilePath, dirFilePath);
                 }
+                state.LastBackupOn = DateTime.Now;
+                UpdatePersistantState(state);
             }
             else
             {
                 // todo: Do GZIP Compression
             }
+        }
+
+        protected bool IsBackupNeeded(BackupAgentState state, string srcLocation)
+        {
+            if (state?.LastBackupOn == null) return true;
+
+            var allSrcFiles = Directory.GetFiles(srcLocation, "**", SearchOption.AllDirectories);
+            foreach (var srcFilePath in allSrcFiles)
+            {
+                var fi = new FileInfo(srcFilePath);
+                if (fi.LastWriteTime > state.LastBackupOn) return true;
+            }
+            return false;
+        }
+
+        protected BackupAgentState LoadPersistantState()
+        {
+            var filePath = $"{AgentName}.json";
+            if (!File.Exists(filePath)) return new();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<BackupAgentState>(File.ReadAllText(filePath));
+        }
+
+        protected void UpdatePersistantState(BackupAgentState state)
+        {
+            var filePath = $"{AgentName}.json";
+            File.WriteAllText(filePath, Newtonsoft.Json.JsonConvert.SerializeObject(state));
         }
 
         protected string GetBackupText(string backupFormat)
@@ -67,6 +100,11 @@ namespace DesktopAgentWpf.Backups
         }
     }
 
+    public class BackupAgentState
+    {
+        public DateTime? LastBackupOn { get; set; }
+    }
+
     public class BackupAgentOption
     {
         public string AppName { get; set; }
@@ -75,5 +113,6 @@ namespace DesktopAgentWpf.Backups
         public string BackupFormat { get; set; }
         public bool AutoBackupAfterExit { get; set; }
         public bool Compression { get; set; }
+        public bool ComparisonMode { get; set; }
     }
 }
